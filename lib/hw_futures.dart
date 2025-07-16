@@ -1,13 +1,13 @@
 import 'dart:async';
 
 void main() async {
-  print('---------------------- PART I ----------------------------\n\n');
+  print('---------------------- PART I ----------------------------');
   print('---------------------- Task 1 ----------------------------');
 
   final nameStopwatch = Stopwatch()..start();
   String name = await fetchName();
   nameStopwatch.stop();
-  print('My name is $name');
+  print('Мене звати $name');
   print('fetchName() executed in ${nameStopwatch.elapsedMilliseconds} ms');
 
   print('---------------------- Task 2 ----------------------------');
@@ -17,6 +17,23 @@ void main() async {
   ageStopwatch.stop();
   print(ageString);
   print('fetchAge() executed in ${ageStopwatch.elapsedMilliseconds} ms');
+
+  print('---------------------- Task 4 ----------------------------');
+  final stopwatchParallel = Stopwatch()..start();
+  // Start both futures in parallel
+  final List<String> results = await Future.wait([
+    fetchName(),
+    fetchAge(59),
+  ]);
+  stopwatchParallel.stop();
+
+  String namePar = results[0];
+  String ageStringPar = results[1];
+
+  print('Паралельно мене звати $namePar');
+  print(ageStringPar);
+  print(
+      'Обидві функції виконувалися протягом  ${stopwatchParallel.elapsedMilliseconds} ms');
 }
 
 Future<String> fetchName() async {
