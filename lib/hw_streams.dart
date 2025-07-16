@@ -28,4 +28,18 @@ void main() async {
   await for (final value in periodicStream) {
     print('\u001b[31m$value...\u001b[0m');
   }
+  print('-------------------------- Task 8 ----------------------------------');
+
+  final controller = StreamController<String>();
+
+  controller.stream.listen(
+    (value) => print('Отримано: $value'),
+    onDone: () => print('Стрім завершено'),
+  );
+
+  controller.add('Hello');
+  controller.add('World');
+  controller.add('Dart');
+
+  controller.close();
 }
